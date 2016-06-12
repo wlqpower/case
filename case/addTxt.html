@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>函数节流</title>
+    </head>
+    <body>
+        <button class="btn" type="button" name="button">anniu</button>
+        <div class="test">
+
+        </div>
+        <script src="js/jquery-1.11.3.min.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            var timer = null;
+            var num = "",i= 0;
+
+            function testTxt(txt){
+                return (function tt(){
+                    clearInterval(timer);
+                    setInterval(function(){
+
+                        if(i < txt.length){
+                            num += txt[i];
+                            $(".test").text(num);
+                            i++;
+                        }
+                    },300)
+                })()
+            }
+
+            var txt = "hello world";
+
+            $(".btn").on("click",function(){
+                testTxt(txt);
+            });
+
+        </script>
+    </body>
+</html>

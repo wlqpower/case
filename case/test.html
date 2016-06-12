@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>函数节流</title>
+    </head>
+    <body>
+        <script src="js/jquery-1.11.3.min.js" charset="utf-8"></script>
+        <script type="text/javascript">
+                $(function(){
+                    var n = 0;
+                    function resizeTest(){
+                        console.log(++n);
+                    }
+
+                    // function testTime(maintest,contest){
+                    //     clearInterval(maintest.id);
+                    //     maintest.id = setTimeout(function(){
+                    //         maintest.call(contest);
+                    //     },500)
+                    // }
+
+                    // function testTime(method,delay){
+                    //     var timer = null;
+                    //     return function(){
+                    //         var context = this, args = arguments;
+                    //         clearTimeout(timer);
+                    //         timer = setTimeout(function(){
+                    //             method.apply(context,args);
+                    //         },delay)
+                    //     }
+                    // }
+
+                    function testTime(method,delay,duration){
+                        var timer=null, begin=new Date();
+                        return function(){
+                            var context=this, args=arguments, current=new Date();;
+                            clearTimeout(timer);
+                            if(current-begin>=duration){
+                                 method.apply(context,args);
+                                 begin=current;
+                            }else{
+                                timer=setTimeout(function(){
+                                    method.apply(context,args);
+                                },delay);
+                            }
+                        }
+                    }
+
+                    window.onresize = testTime(resizeTest,500,200);
+                    // window.onresize = function(){
+                    //     testTime(resizeTest,500);
+                    // }
+
+
+                })
+        </script>
+    </body>
+</html>
